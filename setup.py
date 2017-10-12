@@ -30,10 +30,10 @@ def get_version():
 
 
 setup_requires = ['lxml']
-# install_requires specifies a list of package dependencies that are 
-# installed when 'python setup.py install' is run. On Linux/Mac systems 
-# this also allows installation directly from the github repository 
-# (using 'pip install -e git+git://github.com/rheimbuchArelle.git#egg=Arelle') 
+# install_requires specifies a list of package dependencies that are
+# installed when 'python setup.py install' is run. On Linux/Mac systems
+# this also allows installation directly from the github repository
+# (using 'pip install -e git+git://github.com/rheimbuchArelle.git#egg=Arelle')
 # and the install_requires packages are auto-installed as well.
 install_requires = ['lxml']
 options = {}
@@ -83,7 +83,7 @@ class build_py27(_build_py):
             False,
             False
         )
-    
+
     def copy_file(self, source, target, preserve_mode=True):
 
         if match_patterns(source, build_py27_unmodified):
@@ -108,9 +108,9 @@ class build_py27(_build_py):
 
 if sys.version_info[0] < 3:
     setup_requires.append('3to2')
-    # cmdclass allows you to override the distutils commands that are 
-    # run through 'python setup.py somecmd'. Under python 2.7 replace 
-    # the 'build_py' with a custom subclass (build_py27) that invokes 
+    # cmdclass allows you to override the distutils commands that are
+    # run through 'python setup.py somecmd'. Under python 2.7 replace
+    # the 'build_py' with a custom subclass (build_py27) that invokes
     # 3to2 refactoring on each python file as its copied to the build
     # directory.
     cmdclass['build_py'] = build_py27
@@ -129,16 +129,16 @@ try:
             # in `build_py27`.
             sys.path.insert(0, os.path.abspath("./build/lib"))
             sphinx.setup_command.BuildDoc.run(self)
-                
+
     if sys.version_info[0] < 3:
         setup_requires.append('3to2')
         setup_requires.append('sphinx')
-        # do a similar override of the 'build_sphinx' command to ensure 
-        # that the 3to2-enabled build command runs before calling back to 
-        # the default build_sphinx superclass. 
+        # do a similar override of the 'build_sphinx' command to ensure
+        # that the 3to2-enabled build command runs before calling back to
+        # the default build_sphinx superclass.
         cmdclass['build_sphinx'] = build_sphinx_py27
-        # There is also a python 2.x conditional switch in 'apidocs/conf.py' 
-        # that sets sphinx to look at the 3to2 converted build files instead 
+        # There is also a python 2.x conditional switch in 'apidocs/conf.py'
+        # that sets sphinx to look at the 3to2 converted build files instead
         # of the original unconverted source.
 except ImportError as e:
     print("Documentation production by Sphinx is not available: %s" % e)
@@ -149,36 +149,36 @@ except ImportError as e:
 
 if sys.platform == 'darwin':
     from setuptools import setup, find_packages
-    
+
     setup_requires.append('py2app')
     # Cross-platform applications generally expect sys.argv to
     # be used for opening files.
-    
-    plist = dict(CFBundleIconFile='arelle.icns', 
-                 NSHumanReadableCopyright='(c) 2010-2013 Mark V Systems Limited') 
+
+    plist = dict(CFBundleIconFile='arelle.icns',
+                 NSHumanReadableCopyright='(c) 2010-2013 Mark V Systems Limited')
 
     # MacOS launches CntlrWinMain and uses "ARELLE_ARGS" to effect console (shell) mode
-    options = dict(py2app=dict(app=['arelle/CntlrWinMain.py'], 
-                               iconfile='arelle/images/arelle.icns', 
-                               plist=plist, 
+    options = dict(py2app=dict(app=['arelle/CntlrWinMain.py'],
+                               iconfile='arelle/images/arelle.icns',
+                               plist=plist,
                                #
                                # rdflib & isodate egg files: rename .zip cpy lib & egg-info subdirectories to site-packages directory
                                #
-                               includes=['lxml', 'lxml.etree',  
-                                         'lxml._elementpath', 'pg8000', 
-                                         'rdflib', 'rdflib.extras', 'rdflib.tools', 
+                               includes=['lxml', 'lxml.etree',
+                                         'lxml._elementpath', 'pg8000',
+                                         'rdflib', 'rdflib.extras', 'rdflib.tools',
                                          # more rdflib plugin modules may need to be added later
-                                         'rdflib.plugins', 'rdflib.plugins.memory', 
-                                         'rdflib.plugins.parsers', 
-                                         'rdflib.plugins.serializers', 'rdflib.plugins.serializers.rdfxml', 'rdflib.plugins.serializers.turtle', 'rdflib.plugins.serializers.xmlwriter', 
-                                         'rdflib.plugins.sparql', 
-                                         'rdflib.plugins.stores', 
-                                         'isodate', 'regex', 'gzip', 'zlib'])) 
+                                         'rdflib.plugins', 'rdflib.plugins.memory',
+                                         'rdflib.plugins.parsers',
+                                         'rdflib.plugins.serializers', 'rdflib.plugins.serializers.rdfxml', 'rdflib.plugins.serializers.turtle', 'rdflib.plugins.serializers.xmlwriter',
+                                         'rdflib.plugins.sparql',
+                                         'rdflib.plugins.stores',
+                                         'isodate', 'regex', 'gzip', 'zlib']))
 
     packages = find_packages('.')
     dataFiles = [
-    #XXX: this breaks build on Lion/Py3.2  --mike 
-    #'--iconfile', 
+    #XXX: this breaks build on Lion/Py3.2  --mike
+    #'--iconfile',
     ('config',['arelle/config/' + f for f in os.listdir('arelle/config')]),
     ('doc',['arelle/doc/' + f for f in os.listdir('arelle/doc')]),
     ('examples',['arelle/examples/' + f for f in os.listdir('arelle/examples')]),
@@ -200,8 +200,8 @@ if sys.platform == 'darwin':
 if sys.platform in ('darwin', 'linux2', 'linux', 'sunos5'):
     from setuptools import find_packages
     try:
-        from cx_Freeze import setup, Executable  
-        cx_FreezeExecutables = [ 
+        from cx_Freeze import setup, Executable
+        cx_FreezeExecutables = [
             Executable(script="arelleGUI.pyw", targetName="arelle"),
             Executable(script="arelleCmdLine.py")
         ]
@@ -232,15 +232,15 @@ if sys.platform in ('darwin', 'linux2', 'linux', 'sunos5'):
         # copy tck and tk built as described: https://www.tcl.tk/doc/howto/compile.html#mac
         includeFiles.append(('/Library/Frameworks/Tcl.framework/Versions/8.6/Resources/Scripts','tcl8.6'))
         includeFiles.append(('/Library/Frameworks/Tk.framework/Versions/8.6/Resources/Scripts','tk8.6'))
-    else: 
+    else:
         includeFiles.append(('arelle/scripts-unix','scripts'))
-                
+
     if os.path.exists("version.txt"):
         includeFiles.append(('version.txt', 'version.txt'))
-        
+
     includeLibs = [
         'lxml', 'lxml.etree', 'lxml._elementpath', 'lxml.html',
-        'pg8000', 'pymysql', 'sqlite3', 'numpy', 
+        'pg8000', 'pymysql', 'sqlite3', 'numpy',
         # note cx_Oracle isn't here because it is version and machine specific,
         # ubuntu not likely working
         # more rdflib plugin modules may need to be added later
@@ -256,10 +256,10 @@ if sys.platform in ('darwin', 'linux2', 'linux', 'sunos5'):
         'rdflib.plugins.serializers.xmlwriter',
         'rdflib.plugins.sparql',
         'rdflib.plugins.stores',
-        'isodate', 'regex', 'gzip', 'zlib', 
+        'isodate', 'regex', 'gzip', 'zlib',
         'openpyxl' # openpyxl's __init__.py must be hand edited, see https://bitbucket.org/openpyxl/openpyxl/pull-requests/80/__about__py/diff
     ]
-    
+
     # uncomment the next two files if cx_Freezing with EdgarRenderer
     # note that openpyxl must be 2.1.4 at this time
     if os.path.exists("arelle/plugin/EdgarRenderer"):
@@ -297,11 +297,11 @@ if sys.platform in ('darwin', 'linux2', 'linux', 'sunos5'):
             "iconfile": 'arelle/images/arelle.icns',
             "bundle_name": 'Arelle',
         }
-        
-    
+
+
 elif sys.platform == 'win32':
     from setuptools import find_packages
-    from cx_Freeze import setup, Executable 
+    from cx_Freeze import setup, Executable
     # py2exe is not ported to Python 3 yet
     # setup_requires.append('py2exe')
     # FIXME: this should use the entry_points mechanism
@@ -327,7 +327,7 @@ elif sys.platform == 'win32':
 
     if os.path.exists("version.txt"):
         win32includeFiles.append('version.txt')
-        
+
     includeLibs = [
         'lxml', 'lxml.etree', 'lxml._elementpath', 'lxml.html',
         'pg8000', 'pymysql', 'cx_Oracle', 'pyodbc', 'sqlite3', 'numpy',
@@ -344,7 +344,7 @@ elif sys.platform == 'win32':
         'rdflib.plugins.serializers.xmlwriter',
         'rdflib.plugins.sparql',
         'rdflib.plugins.stores',
-        'isodate', 'regex', 'gzip', 'zlib', 
+        'isodate', 'regex', 'gzip', 'zlib',
         'openpyxl' # openpyxl's __init__.py must be hand edited, see https://bitbucket.org/openpyxl/openpyxl/pull-requests/80/__about__py/diff
 
     ]
@@ -353,11 +353,11 @@ elif sys.platform == 'win32':
     # removed tornado
     if os.path.exists("arelle/plugin/EdgarRenderer"):
         includeLibs += [
-            'cherrypy', 'cherrypy.wsgiserver.wsgiserver3', 
+            'cherrypy', 'cherrypy.wsgiserver.wsgiserver3',
             'dateutil', 'dateutil.relativedelta',
             "six", "pyparsing", "matplotlib"
         ]
-        
+
     options = dict(
         build_exe={
             "include_files": win32includeFiles,
@@ -371,7 +371,7 @@ elif sys.platform == 'win32':
             "includes": includeLibs
         }
     )
-   
+
     # windows uses arelleGUI.exe to launch in GUI mode, arelleCmdLine.exe in command line mode
     cx_FreezeExecutables = [
         Executable(
@@ -383,9 +383,9 @@ elif sys.platform == 'win32':
             script="arelleCmdLine.py",
         )
     ]
-else:  
-    #print("Your platform {0} isn't supported".format(sys.platform)) 
-    #sys.exit(1) 
+else:
+    #print("Your platform {0} isn't supported".format(sys.platform))
+    #sys.exit(1)
     from setuptools import os, setup, find_packages
     packages = find_packages(
         '.', # note that new setuptools finds plugin and lib unwanted stuff
@@ -408,7 +408,7 @@ setup(
     url='http://www.arelle.org',
     download_url='http://www.arelle.org/download',
     cmdclass=cmdclass,
-    include_package_data=True,  # note: this uses MANIFEST.in
+    # include_package_data=True,  # note: this uses MANIFEST.in
     packages=packages,
     data_files=dataFiles,
     platforms=['OS Independent'],
